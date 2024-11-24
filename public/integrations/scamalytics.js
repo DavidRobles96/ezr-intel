@@ -1,5 +1,5 @@
-export async function run(data) {
-    const response = await fetch(`https://scamalytics.com/ip/${data.value}/`);
+export async function run(data, fetcher) {
+    const response = await chrome.runtime.sendMessage({ type: 'fetch', url: `https://scamalytics.com/ip/${data.value}/`, options: { retries: 2 } });
     const text = await response.text();
     const parser = new DOMParser();
     const htmlDoc = parser.parseFromString(text, 'text/html');
